@@ -49,7 +49,7 @@ export const Game = () => {
         color="blue"
       />
       <directionalLight position={[10, 10, 10]} intensity={0.4} />
-      <Physics debug>
+      <Physics>
         {players.map(({ state, controls }) => (
           <CarController key={state.id} state={state} controls={controls} />
         ))}
