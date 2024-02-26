@@ -38,14 +38,26 @@ export const UI = () => {
   }, [gameState]);
 
   usePlayersList(true);
+
+  const [loadingContent, setLoadingContent] = useState(0);
+  useEffect(() => {
+    if (loadingSlide) {
+      const interval = setInterval(() => {
+        setLoadingContent((prev) => (prev + 1) % CAR_MODELS.length);
+      }, 200);
+      return () => clearInterval(interval);
+    }
+  }, [loadingSlide]);
+
   return (
     <>
       <div
-        className={`fixed z-30 top-0 left-0 right-0 h-screen bg-white flex items-center justify-center text-5xl pointer-events-none transition-transform duration-300
+        className={`fixed z-30 top-0 left-0 right-0 h-screen bg-white flex items-center justify-center gap-1 text-5xl pointer-events-none transition-transform duration-500
       ${loadingSlide ? "" : "translate-y-[100%]"}
       `}
       >
-        VROUM VROUM 🚗
+        VROOM, VROOM
+        <img src={`images/cars/${CAR_MODELS[loadingContent]}.png`} />
       </div>
       <div
         className={
