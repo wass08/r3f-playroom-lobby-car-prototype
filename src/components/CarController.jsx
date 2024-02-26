@@ -1,4 +1,4 @@
-import { PerspectiveCamera } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { RigidBody, euler, quat, vec3 } from "@react-three/rapier";
 import { useControls } from "leva";
@@ -42,7 +42,7 @@ export const CarController = ({ state, controls }) => {
     if (!rb.current) {
       return;
     }
-    if (me.id === state.id) {
+    if (me?.id === state.id) {
       camera.lookAt(vec3(rb.current.translation()));
     }
     const rotVel = rb.current.angvel();
@@ -99,7 +99,7 @@ export const CarController = ({ state, controls }) => {
   }, []);
   return (
     <group>
-      {/* <OrbitControls /> */}
+      <OrbitControls />
       <RigidBody
         ref={rb}
         colliders={"hull"}
@@ -113,7 +113,7 @@ export const CarController = ({ state, controls }) => {
         }}
       >
         <Car model={carModel} scale={0.32} />
-        {me.id === state.id && (
+        {me?.id === state.id && (
           <PerspectiveCamera makeDefault position={[0, 1.5, -3]} near={1} />
         )}
       </RigidBody>

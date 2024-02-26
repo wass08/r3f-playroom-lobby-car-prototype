@@ -15,7 +15,7 @@ export const UI = () => {
   const [gameState, setGameState] = useMultiplayerState("gameState", "lobby");
   const [nameEditing, setNameEditing] = useAtom(NameEditingAtom);
   const [nameInput, setNameInput] = useState(
-    me?.getState("name") || me.state.profile.name
+    me?.getState("name") || me?.state.profile.name
   );
 
   const [invited, setInvited] = useState(false);
@@ -49,7 +49,7 @@ export const UI = () => {
                 : ""
             }
             `}
-            onClick={() => me.setState("car", model)}
+            onClick={() => me?.setState("car", model)}
           >
             <img
               src={`/images/cars/${model}.png`}
@@ -132,7 +132,7 @@ export const UI = () => {
             onChange={(e) => setNameInput(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                me.setState("name", nameInput);
+                me?.setState("name", nameInput);
                 setNameEditing(false);
               }
             }}
@@ -149,7 +149,7 @@ export const UI = () => {
             <button
               className="px-8 py-2 bg-green-400 text-white text-2xl rounded-md"
               onClick={() => {
-                me.setState("name", nameInput);
+                me?.setState("name", nameInput);
                 setNameEditing(false);
               }}
             >

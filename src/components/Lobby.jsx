@@ -160,7 +160,7 @@ export const Lobby = () => {
                 {player.state.name || player.state.profile.name}
                 <meshBasicMaterial color="black" transparent opacity={0.8} />
               </Text>
-              {player.id === me.id && (
+              {player.id === me?.id && (
                 <>
                   <Image
                     onClick={() => setNameEditing(true)}
@@ -181,11 +181,11 @@ export const Lobby = () => {
                 </>
               )}
             </Billboard>
-            <group position-y={player.id === me.id ? 0.15 : 0}>
+            <group position-y={player.id === me?.id ? 0.15 : 0}>
               <CarSwitcher player={player} />
             </group>
 
-            {player.id === me.id && (
+            {player.id === me?.id && (
               <>
                 <pointLight
                   position-x={1}
