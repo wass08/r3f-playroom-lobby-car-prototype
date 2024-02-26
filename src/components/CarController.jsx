@@ -38,35 +38,32 @@ export const CarController = ({ state, controls }) => {
     },
   });
 
+  const lookAt = useRef(new Vector3(0, 0, 0));
   useFrame(({ camera }, delta) => {
     if (!rb.current) {
       return;
     }
     if (me?.id === state.id) {
-      camera.lookAt(vec3(rb.current.translation()));
+      const targetLookAt = vec3(rb.current.translation());
+      lookAt.current.lerp(targetLookAt, 0.1);
+      camera.lookAt(lookAt.current);
     }
     const rotVel = rb.current.angvel();
     if (controls.isJoystickPressed()) {
       const angle = controls.angle();
-      rotVel.y =
-        (controls.isPressed("Brake") ? 1 : -1) *
-        Math.sin(angle) *
-        rotationSpeed;
-    }
-    rb.current.setAngvel(rotVel, true);
-    if (controls.isPressed("Accelerate") || controls.isPressed("Brake")) {
+      const dir = angle > Math.PI / 2 ? 1 : -1;
+      rotVel.y = -dir * Math.sin(angle) * rotationSpeed;
+      // console.log(radToDeg(angle));
       const impulse = vec3({
         x: 0,
         y: 0,
-        z:
-          (CAR_SPEEDS[carModel] || carSpeed) *
-          delta *
-          (controls.isPressed("Brake") ? -1 : 1),
+        z: (CAR_SPEEDS[carModel] || carSpeed) * delta * dir,
       });
       const eulerRot = euler().setFromQuaternion(quat(rb.current.rotation()));
       impulse.applyEuler(eulerRot);
       rb.current.applyImpulse(impulse, true);
     }
+    rb.current.setAngvel(rotVel, true);
     if (isHost()) {
       state.setState("pos", rb.current.translation());
       state.setState("rot", rb.current.rotation());

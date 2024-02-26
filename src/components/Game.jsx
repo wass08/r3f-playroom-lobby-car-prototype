@@ -1,4 +1,4 @@
-import { Environment, Lightformer } from "@react-three/drei";
+import { Environment, Gltf, Lightformer } from "@react-three/drei";
 import { CuboidCollider, Physics, RigidBody } from "@react-three/rapier";
 import { Joystick, onPlayerJoin } from "playroomkit";
 import { useEffect, useState } from "react";
@@ -12,12 +12,7 @@ export const Game = () => {
     onPlayerJoin((state) => {
       const controls = new Joystick(state, {
         type: "angular",
-        buttons: [
-          { id: "Brake", label: "🔽" },
-          { id: "Accelerate", label: "🔼" },
-          ,
-          { id: "Respawn", label: "Spawn" },
-        ],
+        buttons: [{ id: "Respawn", label: "Spawn" }],
       });
       const newPlayer = { state, controls };
       setPlayers((players) => [...players, newPlayer]);
@@ -54,7 +49,7 @@ export const Game = () => {
         color="blue"
       />
       <directionalLight position={[10, 10, 10]} intensity={0.4} />
-      <Physics>
+      <Physics debug>
         {players.map(({ state, controls }) => (
           <CarController key={state.id} state={state} controls={controls} />
         ))}
@@ -70,6 +65,7 @@ export const Game = () => {
         >
           <CuboidCollider args={[20, 3, 20]} />
         </RigidBody>
+        <Gltf src="/models/map_road.glb" />
       </Physics>
     </group>
   );

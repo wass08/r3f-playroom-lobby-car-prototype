@@ -1,6 +1,5 @@
 import { Canvas } from "@react-three/fiber";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
-import { Leva } from "leva";
 import { myPlayer } from "playroomkit";
 import { Experience } from "./components/Experience";
 import { UI } from "./components/UI";
@@ -10,7 +9,6 @@ function App() {
   return (
     <>
       <UI />
-      <Leva hidden />
       <Canvas
         shadows
         camera={{ position: [4.2, 1.5, 7.5], fov: 45, near: 0.5 }}
