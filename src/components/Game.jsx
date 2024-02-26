@@ -1,4 +1,4 @@
-import { Environment } from "@react-three/drei";
+import { Environment, Lightformer } from "@react-three/drei";
 import { CuboidCollider, Physics, RigidBody } from "@react-three/rapier";
 import { Joystick, onPlayerJoin } from "playroomkit";
 import { useEffect, useState } from "react";
@@ -16,7 +16,7 @@ export const Game = () => {
           { id: "Brake", label: "🔽" },
           { id: "Accelerate", label: "🔼" },
           ,
-          { id: "Respawn", label: "Respawn" },
+          { id: "Respawn", label: "Spawn" },
         ],
       });
       const newPlayer = { state, controls };
@@ -29,7 +29,17 @@ export const Game = () => {
 
   return (
     <group>
-      <Environment preset="sunset" />
+      <ambientLight intensity={0.4} />
+      <Environment>
+        <Lightformer
+          position={[5, 5, 5]}
+          form="rect" // circle | ring | rect (optional, default = rect)
+          intensity={1} // power level (optional = 1)
+          color="white" // (optional = white)
+          scale={[10, 10]} // Scale it any way you prefer (optional = [1, 1])
+          target={[0, 0, 0]} // Target position (optional = undefined)
+        />
+      </Environment>
       <pointLight position={[0, 5, 0]} intensity={2.5} distance={10} />
       <pointLight
         position={[5, 5, 0]}

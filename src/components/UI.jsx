@@ -5,7 +5,7 @@ import {
   useMultiplayerState,
   usePlayersList,
 } from "playroomkit";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CAR_MODELS } from "./Car";
 
 export const NameEditingAtom = atom(false);
@@ -13,6 +13,7 @@ export const NameEditingAtom = atom(false);
 export const UI = () => {
   const me = myPlayer();
   const [gameState, setGameState] = useMultiplayerState("gameState", "lobby");
+  const [loadingSlide, setLoadingSlide] = useState(true);
   const [nameEditing, setNameEditing] = useAtom(NameEditingAtom);
   const [nameInput, setNameInput] = useState(
     me?.getState("name") || me?.state.profile.name
@@ -26,22 +27,35 @@ export const UI = () => {
     setTimeout(() => setInvited(false), 2000);
   };
 
+  useEffect(() => {
+    setLoadingSlide(true);
+    if (gameState !== "loading") {
+      const timeout = setTimeout(() => {
+        setLoadingSlide(false);
+      }, 1000);
+      return () => clearTimeout(timeout);
+    }
+  }, [gameState]);
+
   usePlayersList(true);
   return (
     <>
       <div
-        className={`fixed z-10 bottom-4 left-1/2 flex flex-wrap justify-center items-center ${
-          gameState === "lobby" ? "gap-4" : "gap-2"
-        } -translate-x-1/2 w-full max-w-[75vw]`}
+        className={`fixed z-30 top-0 left-0 right-0 h-screen bg-white flex items-center justify-center text-5xl pointer-events-none transition-transform duration-300
+      ${loadingSlide ? "" : "translate-y-[100%]"}
+      `}
+      >
+        VROUM VROUM 🚗
+      </div>
+      <div
+        className={
+          "fixed z-10 bottom-4 left-1/2 flex flex-wrap justify-center items-center gap-2.5 -translate-x-1/2 w-full max-w-[75vw]"
+        }
       >
         {CAR_MODELS.map((model, idx) => (
           <div
             key={model}
-            className={`${
-              gameState === "lobby"
-                ? "min-w-16 min-h-16 w-16 h-16"
-                : "min-w-12 min-h-12 h-12 w-12"
-            } bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg rounded-full shadow-md cursor-pointer
+            className={`min-w-14 min-h-14 w-14 h-14 bg-white bg-opacity-50 backdrop-filter backdrop-blur-lg rounded-full shadow-md cursor-pointer
             ${
               me?.getState("car") === model ||
               (!me?.getState("car") && idx === 0)
@@ -63,17 +77,21 @@ export const UI = () => {
         <div className="fixed bottom-4 right-4 z-10 flex flex-col gap-2 items-end">
           <button
             className="px-4 py-2 bg-gray-100 text-black text-lg rounded-md"
-            onClick={() => setGameState("game")}
+            onClick={() => {
+              setGameState("loading");
+              setTimeout(() => {
+                setGameState("game");
+              }, 500);
+            }}
           >
             Private
           </button>
           <button
             className="px-8 py-2 bg-gray-100 text-black text-2xl rounded-md"
             onClick={async () => {
-              setGameState("game");
-              console.log("before resolve");
+              setGameState("loading");
               await startMatchmaking();
-              console.log("after resolve");
+              setGameState("game");
             }}
           >
             Online
