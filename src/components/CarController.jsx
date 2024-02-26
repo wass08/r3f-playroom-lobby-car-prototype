@@ -1,4 +1,4 @@
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import { PerspectiveCamera } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { RigidBody, euler, quat, vec3 } from "@react-three/rapier";
 import { useControls } from "leva";
@@ -99,7 +99,7 @@ export const CarController = ({ state, controls }) => {
   }, []);
   return (
     <group>
-      <OrbitControls />
+      {/* <OrbitControls /> */}
       <RigidBody
         ref={rb}
         colliders={"hull"}
