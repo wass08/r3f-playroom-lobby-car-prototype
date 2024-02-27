@@ -1,5 +1,6 @@
 import { atom, useAtom } from "jotai";
 import {
+  isHost,
   myPlayer,
   startMatchmaking,
   useMultiplayerState,
@@ -85,7 +86,7 @@ export const UI = () => {
           </div>
         ))}
       </div>
-      {gameState === "lobby" && (
+      {gameState === "lobby" && isHost() && (
         <div className="fixed bottom-4 right-4 z-10 flex flex-col gap-2 items-end">
           <button
             className="px-4 py-2 bg-gray-100 text-black text-lg rounded-md"

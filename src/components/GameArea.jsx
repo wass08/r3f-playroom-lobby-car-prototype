@@ -1,11 +1,11 @@
-import { useGLTF } from "@react-three/drei";
+import { Gltf, useGLTF } from "@react-three/drei";
 import { degToRad } from "three/src/math/MathUtils";
 
 export const GameArea = () => {
-  const { scene } = useGLTF("/models/map_buildings.glb");
+  // const { scene } = useGLTF("/models/map_buildings.glb");
   return (
     <group>
-      <primitive object={scene} />
+      <Gltf src="/models/map_buildings.glb" />
       <mesh rotation-x={degToRad(-90)} position-y={0.05}>
         <planeGeometry args={[18, 18]} />
         <meshBasicMaterial />
