@@ -1,4 +1,4 @@
-import { PerspectiveCamera } from "@react-three/drei";
+import { Html, PerspectiveCamera } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { RigidBody, euler, quat, vec3 } from "@react-three/rapier";
 import { useControls } from "leva";
@@ -109,6 +109,11 @@ export const CarController = ({ state, controls }) => {
           }
         }}
       >
+        <Html position-y={0.55}>
+          <h1 className="text-center text-white drop-shadow-md  backdrop-filter bg-slate-300 bg-opacity-30 backdrop-blur-lg rounded-md py-2 px-4 text-xl  transform -translate-x-1/2">
+            {state.state.name || state.state.profile.name}
+          </h1>
+        </Html>
         <Car model={carModel} scale={0.32} />
         {me?.id === state.id && (
           <PerspectiveCamera makeDefault position={[0, 1.5, -3]} near={1} />
