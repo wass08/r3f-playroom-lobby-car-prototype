@@ -110,7 +110,7 @@ export const CarController = ({ state, controls }) => {
         }}
       >
         <Html position-y={0.55}>
-          <h1 className="text-center text-white drop-shadow-md  backdrop-filter bg-slate-300 bg-opacity-30 backdrop-blur-lg rounded-md py-2 px-4 text-xl  transform -translate-x-1/2">
+          <h1 className="text-center whitespace-nowrap text-white drop-shadow-md  backdrop-filter bg-slate-300 bg-opacity-30 backdrop-blur-lg rounded-md py-2 px-4 text-xl  transform -translate-x-1/2">
             {state.state.name || state.state.profile.name}
           </h1>
         </Html>
