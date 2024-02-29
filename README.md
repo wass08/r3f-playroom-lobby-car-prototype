@@ -1,10 +1,11 @@
-# r3f-vite-starter
-A boilerplate to build R3F projects
+![Video Thumbnail](https://img.youtube.com/vi/1-7PY08aRM0/maxresdefault.jpg)
 
+[Video tutorial](https://youtu.be/1-7PY08aRM0)
+
+[Play the game](https://r3f-playroom-lobby-car-prototype.vercel.app/)
+
+Start the development server with
 ```
 yarn
 yarn dev
 ```
-
-
-![image](https://user-images.githubusercontent.com/6551176/221732091-23ee52cb-4150-42fa-b998-43628d7a6b0d.png)
